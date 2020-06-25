@@ -1,0 +1,18 @@
+sudo: required
+services:
+  - docker
+before_install:
+  - docker build -t opex08v3/react-test -f ./client/Dockerfile.dev ./client
+
+script:
+  - docker run -e CI=true opex08v3/react-test npm test
+after_success:
+  - docker build -t opex08v3/multi-client ./client
+  - docker build -t opex08v3/multi-nginx ./nginx
+  - docker build -t opex08v3/multi-server ./server
+  - docker build -t opex08v3/multi-worker ./worker
+  - echo "$DOCKER_PASSWORD" | docker login -u "$DOCKER_ID" --password-stdin
+  - docker push opex08v3/multi-client
+  - docker push opex08v3/multi-nginx
+  - docker push opex08v3/multi-server
+  - docker push opex08v3/multi-worker

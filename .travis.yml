@@ -1,18 +1,5 @@
+language: generic
 sudo: required
-deploy:
-  edge: true
-  provider: elasticbeanstalk
-  region: us-east-2
-  app: multi-docker
-  env: MultiDocker-env
-  bucker_name: elasticbeanstalk-us-east-2-233238253223
-  bucker_path: docker-multi
-  on:
-    branch: master
-  access_key_id: $AWS_ACCESS_KEY
-  secret_access_key:
-    secure: $AWS_SECRET_KEY
-
 services:
   - docker
 before_install:
@@ -30,3 +17,16 @@ after_success:
   - docker push opex08v3/multi-nginx
   - docker push opex08v3/multi-server
   - docker push opex08v3/multi-worker
+deploy:
+  edge: true
+  provider: elasticbeanstalk
+  region: us-east-2
+  app: multi-docker
+  env: MultiDocker-env
+  bucker_name: elasticbeanstalk-us-east-2-233238253223
+  bucker_path: docker-multi
+  on:
+    branch: master
+  access_key_id: $AWS_ACCESS_KEY
+  secret_access_key:
+    secure: $AWS_SECRET_KEY

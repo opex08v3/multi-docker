@@ -18,7 +18,6 @@ after_success:
   - docker push opex08v3/multi-server
   - docker push opex08v3/multi-worker
 deploy:
-  edge: true
   provider: elasticbeanstalk
   region: us-east-2
   app: multi-docker
